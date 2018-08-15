@@ -9,16 +9,16 @@ public class CalculatorService {
 		
 		Double result;
 		
-		if		(operation == "+")
+		if		(operation.equals("+"))
 			result = number1 + number2;
 		
-		else if (operation == "-")
+		else if (operation.equals("-"))
 			result = number1 - number2;
 		
-		else if (operation == "*")
+		else if (operation.equals("*"))
 			result = number1 * number2;
 		
-		else if (operation == "/")
+		else if (operation.equals("/"))
 			result = number1 / number2;
 		
 		else result = null; //invalid operation
