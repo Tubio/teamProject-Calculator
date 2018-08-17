@@ -1,6 +1,5 @@
-package com.example.demo;
+package com.example.demo.services;
 
-import com.example.demo.services.CalculatorService;
 
 import junit.framework.TestCase;
 import static org.junit.jupiter.api.Assertions.assertThrows;
