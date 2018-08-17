@@ -1,33 +1,55 @@
 package com.example.demo.services;
 
+import java.util.Queue;
 import org.springframework.stereotype.Service;
 
 @Service("calculatorService")
 public class CalculatorService {
 	
-	public Double getResult(Double number1, Double number2, String operation) {
+    //pre: Queue must be alterned between a number and a symbol
+    //post: returns the total result operating from left to right, 
+    //null in case of an invalid operation
+    public Double operate (Queue<String> inputs) {
+        
+        Double result = Double.parseDouble(inputs.remove());
+        String operator = inputs.remove();
+        Double second = Double.parseDouble(inputs.remove());
+        
+        while(!inputs.isEmpty()) {
+            
+            result = getResult(result, operator, second);
+            operator = inputs.remove();
+            second = Double.parseDouble(inputs.remove());
+        }
+        return result;
+    }
+    
+    //pre: operator must be: "+", "-", "*", "/".
+    //post: returns 
+    public Double getResult(Double number1, String operator, Double number2) {
 		
-		Double result = 0D;
+	Double result = 0D;
 		
-		if		(operation.equals("+"))
-			result = number1 + number2;
+	if	(operator.equals("+"))
+            result = number1 + number2;
 		
-		else if (operation.equals("-"))
-			result = number1 - number2;
+	else if (operator.equals("-"))
+            result = number1 - number2;
 		
-		else if (operation.equals("*"))
-			result = number1 * number2;
+	else if (operator.equals("*"))
+            result = number1 * number2;
 		
-		else if (operation.equals("/")){
-                        if(number2 == 0)
-                          throw new ArithmeticException("Can't divide by zero");
-                          System.out.println("Can't divide by zero");
-			result = number1 / number2;
-
-                        }
+	else if (operator.equals("/")){
+            
+            if(number2 == 0){
+                
+                System.out.println("Can't divide by zero");
+                throw new ArithmeticException("Can't divide by zero");
+            }
+            result = number1 / number2;
+        }
+        else result = null; //invalid operation
 		
-		else result = null; //invalid operation
-		
-		return result;
-	}
+	return result;
+    }
 }
