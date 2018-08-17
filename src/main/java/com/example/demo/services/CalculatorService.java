@@ -12,20 +12,21 @@ public class CalculatorService {
     public Double operate (Queue<String> inputs) {
         
         Double result = Double.parseDouble(inputs.remove());
-        String operator = inputs.remove();
-        Double second = Double.parseDouble(inputs.remove());
+        String operator;
+        Double second;
         
-        while(!inputs.isEmpty()) {
-            
-            result = getResult(result, operator, second);
+        do{
             operator = inputs.remove();
             second = Double.parseDouble(inputs.remove());
-        }
+            result = getResult(result,operator,second);
+            
+        }while(!inputs.isEmpty());
+            
         return result;
     }
     
     //pre: operator must be: "+", "-", "*", "/".
-    //post: returns 
+    //post: returns the result, null if the operation is invalid.
     public Double getResult(Double number1, String operator, Double number2) {
 		
 	Double result = 0D;
