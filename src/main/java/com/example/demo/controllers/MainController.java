@@ -21,7 +21,7 @@ public class MainController {
 							 @RequestParam Double number2,
 							 @RequestParam String operation) {
 		
-		return calculatorService.getResult(number1,number2,operation);
+                return calculatorService.getResult(number1,number2,operation);  
 	}
 }
 	
