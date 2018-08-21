@@ -17,6 +17,11 @@ public class MainController {
 	@Autowired
 	CalculatorService calculatorService;
 	
+	public MainController(CalculatorService calculatorService) {
+		super();
+		this.calculatorService = calculatorService;
+	}
+
 	@PostMapping(URL.POST)
 	@ResponseBody
 	public Double calculate (@RequestBody Queue<String> inputs) {

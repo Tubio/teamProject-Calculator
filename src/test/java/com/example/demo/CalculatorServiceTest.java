@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class CalculatorServiceCaseTest extends TestCase{
+public class CalculatorServiceTest extends TestCase{
 		
 	CalculatorService calculatorService = new CalculatorService();
         
