@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.services.CalculatorService;
 import com.example.demo.services.URL;
+import java.util.Queue;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class MainController {
@@ -17,13 +19,8 @@ public class MainController {
 	
 	@PostMapping(URL.POST)
 	@ResponseBody
-	public Double calculate (@RequestParam Double number1,
-							 @RequestParam Double number2,
-							 @RequestParam String operation) {
+	public Double calculate (@RequestBody Queue<String> inputs) {
 		
-                return calculatorService.getResult(number1,number2,operation);  
+                return calculatorService.operate(inputs);  
 	}
-}
-	
-	
-	
+}	
