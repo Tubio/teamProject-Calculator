@@ -19,10 +19,9 @@ public class CalculatorService {
 			result = number1 * number2;
 		
 		else if (operation.equals("/")){
-                        if(number2 == 0){
-                          System.out.println("Can't divide by zero");  
-                          throw new ArithmeticException("Can't divide by zero");}
-                        
+                        if(number2 == 0)
+                          throw new ArithmeticException("Can't divide by zero");
+                          System.out.println("Can't divide by zero");
 			result = number1 / number2;
 
                         }
