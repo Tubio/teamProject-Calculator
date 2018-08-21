@@ -8,7 +8,9 @@ import java.util.Queue;
 import junit.framework.TestCase;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class CalculatorServiceCaseTest extends TestCase{
 		
 	CalculatorService calculatorService = new CalculatorService();
@@ -31,11 +33,12 @@ public class CalculatorServiceCaseTest extends TestCase{
 	@RepeatedTest(10) //this allows the test to be repeated 10 times
         @DisplayName("Repeated Test example")
         public void repeatedSumTestExample(RepetitionInfo repetitionInfo){
-            System.out.println(repetitionInfo.getCurrentRepetition());
-            System.out.println(repetitionInfo.getTotalRepetitions());
-            Double sumResult = calculatorService.getResult(number1, number2, operationSum);
-            assertEquals(30d,sumResult);
-        }
+			Queue<String> mock = new LinkedList<String>();
+	        mock.addAll(Arrays.asList("10","+","20","+","30"));
+	        
+	        Double sumResult = calculatorService.operate(mock);
+	        assertEquals(60d,sumResult);
+	        }
         
         @Test
         @DisplayName("Test Substraction")
