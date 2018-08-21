@@ -22,7 +22,7 @@ public class MainController {
 		this.calculatorService = calculatorService;
 	}
 
-	@PostMapping(URL.POST)
+	@PostMapping("/calculate")
 	@ResponseBody
 	public Double calculate (@RequestBody Queue<String> inputs) {
 		
