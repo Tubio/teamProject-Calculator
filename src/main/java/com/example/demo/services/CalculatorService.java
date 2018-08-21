@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Queue;
 import org.springframework.stereotype.Service;
 
@@ -9,20 +11,27 @@ public class CalculatorService {
     //pre: Queue must be alterned between a number and a symbol
     //post: returns the total result operating from left to right, 
     //null in case of an invalid operation
-    public Double operate (Queue<String> inputs) {
+    public Optional<Double> operate (Queue<String> inputs) {
         
-        Double result = Double.parseDouble(inputs.remove());
-        String operator;
-        Double second;
+        Optional<Double> operationValue = Optional.empty();
         
-        do{
-            operator = inputs.remove();
-            second = Double.parseDouble(inputs.remove());
-            result = getResult(result,operator,second);
+        if(validateQueue(inputs)) {
             
-        }while(!inputs.isEmpty());
+            Double result = Double.parseDouble(inputs.remove());
+            String operator;
+            Double second;
+
+            do{
+                operator = inputs.remove();
+                second = Double.parseDouble(inputs.remove());
+                result = getResult(result,operator,second);
+
+            }while(!inputs.isEmpty());
             
-        return result;
+            operationValue = Optional.of(result);
+            
+        }
+        return operationValue;
     }
     
     //pre: operator must be: "+", "-", "*", "/".
@@ -52,5 +61,19 @@ public class CalculatorService {
         else result = null; //invalid operation
 		
 	return result;
+    }
+    
+    //pre: --
+    //post: returns true if the queue meets the Calculator Queue conditions
+    private Boolean validateQueue(Queue<String> queue) {
+        
+        boolean valid = false;
+        
+        //multiple of 3
+        if(queue.size() % 2 != 0) {
+            
+        }
+        
+        return valid;
     }
 }
