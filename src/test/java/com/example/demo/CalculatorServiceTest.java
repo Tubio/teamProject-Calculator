@@ -123,4 +123,16 @@ public class CalculatorServiceTest extends TestCase{
                 calculatorService.operate(queue);
             });       
     }
+    
+    @Test
+    @DisplayName("Test Empty Queue")
+    public void testEmptyQueue() {
+        
+        Queue<String> emptyQueue = new LinkedList<>();
+        
+        assertThrows(IllegalArgumentException.class, () ->
+            {
+                calculatorService.operate(emptyQueue);
+            });
+    }
 }
