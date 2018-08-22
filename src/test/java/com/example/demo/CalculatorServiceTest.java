@@ -13,27 +13,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class CalculatorServiceTest extends TestCase{
 		
-	CalculatorService calculatorService = new CalculatorService();
+    CalculatorService calculatorService = new CalculatorService();
         
     @BeforeEach
     public void showTestName(TestInfo testInfo){
     	System.out.println("Beggining test: " + testInfo.getDisplayName()  );
     }
        
-	@Test
+    @Test
     @DisplayName("Test Sum")
-	public void testSum() {
+    public void testSum() {
 	
         Queue<String> mock = new LinkedList<String>();
         mock.addAll(Arrays.asList("10","+","20","+","30"));
         
         Double sumResult = calculatorService.operate(mock).get();
         assertEquals(60d,sumResult);
-	}
-	@RepeatedTest(10) //this allows the test to be repeated 10 times
+    }
+    
+    @RepeatedTest(10) //this allows the test to be repeated 10 times
     @DisplayName("Repeated Test example")
     public void repeatedSumTestExample(RepetitionInfo repetitionInfo){
-		Queue<String> mock = new LinkedList<String>();
+	
+        Queue<String> mock = new LinkedList<String>();
         mock.addAll(Arrays.asList("10","+","20","+","30"));
         
         Double sumResult = calculatorService.operate(mock).get();
@@ -42,14 +44,14 @@ public class CalculatorServiceTest extends TestCase{
         
     @Test
     @DisplayName("Test Substraction")
-	public void testSub() {
+    public void testSub() {
 		
         Queue<String> mock = new LinkedList<String>();
         mock.addAll(Arrays.asList("10","-","20","-","30"));
         
         Double subResult = calculatorService.operate(mock).get();
         assertEquals(-40d,subResult);
-	}
+    }
 	
     @Test
     @DisplayName("Test Product")
@@ -81,9 +83,9 @@ public class CalculatorServiceTest extends TestCase{
         mock.addAll(Arrays.asList("5","/","0"));
        
         assertThrows(ArithmeticException.class,
-                ()->{
+            ()->{
                     calculatorService.operate(mock);
-                });
+            });
     }
     
     @Test
@@ -103,7 +105,10 @@ public class CalculatorServiceTest extends TestCase{
         Queue<String> queue = new LinkedList<>();
         queue.addAll(Arrays.asList("1","+"));
         
-        assertFalse(calculatorService.operate(queue).isPresent());
+        assertThrows(IllegalArgumentException.class, () ->
+            {
+                calculatorService.operate(queue);
+            });
     }
     
     @Test
@@ -113,6 +118,9 @@ public class CalculatorServiceTest extends TestCase{
         Queue<String> queue = new LinkedList<>();
         queue.addAll(Arrays.asList("+","+"));
         
-        assertFalse(calculatorService.operate(queue).isPresent());        
+        assertThrows(IllegalArgumentException.class, () ->
+            {
+                calculatorService.operate(queue);
+            });       
     }
 }
