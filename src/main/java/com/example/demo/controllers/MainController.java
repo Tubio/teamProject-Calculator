@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.services.CalculatorService;
 import com.example.demo.services.URL;
+import java.util.Optional;
 import java.util.Queue;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -23,9 +26,14 @@ public class MainController {
 	}
 
 	@PostMapping("/calculate")
-	@ResponseBody
-	public Double calculate (@RequestBody Queue<String> inputs) {
+	public ResponseEntity<Double> calculate (@RequestBody Queue<String> inputs) {
 		
-                return calculatorService.operate(inputs).get();  
+            //cambiar para utilizar @RESPONSEBODY
+                Optional<Double> answer = calculatorService.operate(inputs);
+                
+                if(answer.isPresent())
+                    return new ResponseEntity<>(answer.get(),HttpStatus.ACCEPTED);
+                
+                else return new ResponseEntity<>(0d,HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 }	

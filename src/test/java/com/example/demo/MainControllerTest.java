@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.example.demo.controllers.MainController;
 import com.example.demo.services.CalculatorService;
 import com.google.gson.Gson;
+import java.util.Optional;
 
 //WebMvcTest hace que no se cargue todo el contexto, solo el web layer que queremos probar (en este caso defino que es el controlador principal)
 @WebMvcTest(MainController.class)
@@ -46,7 +47,7 @@ public class MainControllerTest {
 		String request = gson.toJson(myQueue);
 		
 		//stub del metodo operate, lo que queremos probar es el controlador
-		when(calculatorService.operate(myQueue)).thenReturn(3d);
+		when(calculatorService.operate(myQueue)).thenReturn(Optional.of(3d));
 		
 		this.mockMvc.perform(
 			post("/calculate")
