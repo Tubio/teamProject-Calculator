@@ -26,6 +26,6 @@ public class MainController {
 	@ResponseBody
 	public Double calculate (@RequestBody Queue<String> inputs) {
 		
-                return calculatorService.operate(inputs);  
+                return calculatorService.operate(inputs).get();  
 	}
 }	
