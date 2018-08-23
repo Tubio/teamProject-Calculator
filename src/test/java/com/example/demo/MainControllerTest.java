@@ -1,10 +1,12 @@
 package com.example.demo;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.controllers.MainController;
 import com.example.demo.services.CalculatorService;
+import com.google.gson.Gson;
 
 //WebMvcTest hace que no se cargue todo el contexto, solo el web layer que queremos probar (en este caso defino que es el controlador principal)
 @WebMvcTest(MainController.class)
@@ -24,23 +27,35 @@ import com.example.demo.services.CalculatorService;
 public class MainControllerTest {
 	
 	@Autowired
-	MockMvc mockMvc;
+	MockMvc mockMvc; //Este objeto nos permite testear un controlador sin necesidad de iniciar la aplicacion
 	
-	@MockBean
-	CalculatorService calculatorService;
 	
-	private Queue<String> inputs;
+	@MockBean CalculatorService calculatorService;
 	
-	@Test
+	Queue<String> myQueue = new LinkedList<>();
+	
+	//Gson es una libreria que nos ayuda a transformar objetos java en JSON y viceversa
+	Gson gson = new Gson();
+	
+
+	@Test	
 	public void controllerCallTest() throws Exception{
-		//stub del metodo getresult, lo que queremos probar es el controlador
-		when(calculatorService.operate(inputs)).thenReturn(3d);
+		
+		
+		myQueue.add("mock");	
+		String request = gson.toJson(myQueue);
+		
+		//stub del metodo operate, lo que queremos probar es el controlador
+		when(calculatorService.operate(myQueue)).thenReturn(3d);
 		
 		this.mockMvc.perform(
 			post("/calculate")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("prueba")
-			.andExpect(status().isOk());
+				.content(request))
+			.andExpect(status().isOk())
+			.andExpect(content().string(containsString("3")));
 			
+				
 	}
+	
 }
