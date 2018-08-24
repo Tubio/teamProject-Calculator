@@ -1,9 +1,12 @@
 package com.example.demo;
 
 import com.example.demo.services.CalculatorService;
+import static java.lang.Double.max;
+import static java.lang.Double.min;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ThreadLocalRandom;
 
 import junit.framework.TestCase;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,17 +33,6 @@ public class CalculatorServiceTest extends TestCase{
         Double sumResult = calculatorService.operate(mock).get();
         assertEquals(60d,sumResult);
     }
-    
-    @RepeatedTest(10) //this allows the test to be repeated 10 times
-    @DisplayName("Repeated Test example")
-    public void repeatedSumTestExample(RepetitionInfo repetitionInfo){
-	
-        Queue<String> mock = new LinkedList<String>();
-        mock.addAll(Arrays.asList("10","+","20","+","30"));
-        
-        Double sumResult = calculatorService.operate(mock).get();
-        assertEquals(60d,sumResult);
-        }
         
     @Test
     @DisplayName("Test Substraction")
@@ -134,5 +126,73 @@ public class CalculatorServiceTest extends TestCase{
             {
                 calculatorService.operate(emptyQueue);
             });
+    }
+    
+    @RepeatedTest(25)
+    @DisplayName("Test Sum Returning Double")
+    public void testRepeatedSum() {
+        
+        Queue<String> sum = new LinkedList<>();
+        Double min = -1000.000d;
+        Double max = 1000.000d;
+        Double num1 = ThreadLocalRandom.current().nextDouble(min,max);
+        Double num2 = ThreadLocalRandom.current().nextDouble(min,max);
+        
+        sum.addAll(Arrays.asList(Double.toString(num1),"+",Double.toString(num2)));
+        Double sumResult = calculatorService.operate(sum).get();
+        
+        assertTrue(sumResult >= -2000d && sumResult <= 2000d);        
+    }
+    
+    @RepeatedTest(25)
+    @DisplayName("Test Sub Returning Double")
+    public void testRepeatedSub() {
+        
+        Queue<String> sub = new LinkedList<>();
+        Double min = -1000.000d;
+        Double max = 1000.000d;
+        Double num1 = ThreadLocalRandom.current().nextDouble(min,max);
+        Double num2 = ThreadLocalRandom.current().nextDouble(min,max);
+        
+        sub.addAll(Arrays.asList(Double.toString(num1),"-",Double.toString(num2)));
+        Double sumResult = calculatorService.operate(sub).get();
+        
+        assertTrue(sumResult >= -2000d && sumResult <= 2000d);        
+    }
+    
+        @RepeatedTest(25)
+    @DisplayName("Test Prod Returning Double")
+    public void testRepeatedProd() {
+        
+        Queue<String> prod = new LinkedList<>();
+        Double min = -1000.000d;
+        Double max = 1000.000d;
+        Double num1 = ThreadLocalRandom.current().nextDouble(min,max);
+        Double num2 = ThreadLocalRandom.current().nextDouble(min,max);
+        
+        prod.addAll(Arrays.asList(Double.toString(num1),"*",Double.toString(num2)));
+        Double sumResult = calculatorService.operate(prod).get();
+        
+        assertTrue(sumResult >= -1000000d && sumResult <= 1000000d);        
+    }
+    
+        @RepeatedTest(25)
+    @DisplayName("Test Div Returning Double")
+    public void testRepeatedDiv() {
+        
+        Queue<String> div = new LinkedList<>();
+        Double min = -1000.000d;
+        Double max = 1000.000d;
+        Double num1 = ThreadLocalRandom.current().nextDouble(min,max);
+        Double num2;
+        
+        do{
+            num2 = ThreadLocalRandom.current().nextDouble(min,max);
+        }while(num2 == 0d);
+        
+        div.addAll(Arrays.asList(Double.toString(num1),"/",Double.toString(num2)));
+        Double sumResult = calculatorService.operate(div).get();
+        
+        assertTrue(sumResult >= -1000000d && sumResult <= 1000000d);        
     }
 }
