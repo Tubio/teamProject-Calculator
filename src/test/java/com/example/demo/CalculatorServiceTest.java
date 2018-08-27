@@ -47,7 +47,7 @@ public class CalculatorServiceTest extends TestCase{
 	
     @Test
     @DisplayName("Test Product")
-	public void testProd() {
+    public void testProd() {
 	
         Queue<String> mock = new LinkedList<String>();
         mock.addAll(Arrays.asList("1","*","10","*","10"));
@@ -58,7 +58,7 @@ public class CalculatorServiceTest extends TestCase{
 	
     @Test
     @DisplayName("Test Division")
-	public void testDiv() {
+    public void testDiv() {
 		
         Queue<String> mock = new LinkedList<String>();
         mock.addAll(Arrays.asList("20","/","2","/","10"));
@@ -160,7 +160,7 @@ public class CalculatorServiceTest extends TestCase{
         assertTrue(sumResult >= -2000d && sumResult <= 2000d);        
     }
     
-        @RepeatedTest(25)
+    @RepeatedTest(25)
     @DisplayName("Test Prod Returning Double")
     public void testRepeatedProd() {
         
@@ -176,7 +176,7 @@ public class CalculatorServiceTest extends TestCase{
         assertTrue(sumResult >= -1000000d && sumResult <= 1000000d);        
     }
     
-        @RepeatedTest(25)
+    @RepeatedTest(25)
     @DisplayName("Test Div Returning Double")
     public void testRepeatedDiv() {
         
