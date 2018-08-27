@@ -53,7 +53,7 @@ public class MainControllerTest {
 			post("/calculate")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(request))
-			.andExpect(status().isOk())
+			.andExpect(status().isAccepted())
 			.andExpect(content().string(containsString("3")));
 			
 				
