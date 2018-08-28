@@ -27,7 +27,7 @@ public class MainController {
 	}
 
 	@PostMapping("/calculate")
-	public ResponseEntity<Double> calculate (@RequestBody Queue<String> inputs) {
+	public ResponseEntity<String> calculate (@RequestBody Queue<String> inputs) {
 
             Optional<Double> answer;
             
@@ -35,9 +35,12 @@ public class MainController {
                 answer = calculatorService.operate(inputs);
             }
             catch(IllegalArgumentException e){
-                return new ResponseEntity<>(0d,HttpStatus.UNPROCESSABLE_ENTITY);
+                return new ResponseEntity<>("invalid operation",HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+            catch(ArithmeticException e){
+                return new ResponseEntity<>("can not divide by 0",HttpStatus.UNPROCESSABLE_ENTITY);
             }
             
-            return new ResponseEntity<>(answer.get(),HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(Double.toString(answer.get()),HttpStatus.ACCEPTED);
 	}
 }	
