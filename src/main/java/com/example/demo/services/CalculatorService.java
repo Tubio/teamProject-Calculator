@@ -31,7 +31,7 @@ public class CalculatorService {
             
             operationValue = Optional.of(result);
             
-        }else throw new IllegalArgumentException();
+        }else throw new IllegalArgumentException("unprocessable data");
         
         return operationValue;
     }

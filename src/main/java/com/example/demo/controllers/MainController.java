@@ -21,19 +21,23 @@ public class MainController {
 	CalculatorService calculatorService;
 	
 	public MainController(CalculatorService calculatorService) {
-		super();
-		this.calculatorService = calculatorService;
+            
+            super();
+            this.calculatorService = calculatorService;
 	}
 
 	@PostMapping("/calculate")
 	public ResponseEntity<Double> calculate (@RequestBody Queue<String> inputs) {
-		
-            //cambiar para utilizar @RESPONSEBODY
-                Optional<Double> answer = calculatorService.operate(inputs);
-                
-                if(answer.isPresent())
-                    return new ResponseEntity<>(answer.get(),HttpStatus.ACCEPTED);
-                
-                else return new ResponseEntity<>(0d,HttpStatus.UNPROCESSABLE_ENTITY);
+
+            Optional<Double> answer;
+            
+            try{
+                answer = calculatorService.operate(inputs);
+            }
+            catch(IllegalArgumentException e){
+                return new ResponseEntity<>(0d,HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+            
+            return new ResponseEntity<>(answer.get(),HttpStatus.ACCEPTED);
 	}
 }	
